@@ -4,13 +4,34 @@
 #
 
 # Pull base image.
-FROM dockerfile/java:oracle-java7
+FROM ubuntu:14.04
 MAINTAINER wangwscn@hotmail.com
 
+# Install Utilities
+RUN \
+  sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+  apt-get update && \
+  apt-get -y upgrade && \
+  apt-get install -y build-essential && \
+  apt-get install -y software-properties-common && \
+  apt-get install -y byobu curl git htop man unzip vim wget && \
+  rm -rf /var/lib/apt/lists/*
+
+#Install Oracle Java
+RUN \
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java8-installer && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk8-installer
+
+#Set ELK package envs.
 ENV ES_PKG_NAME elasticsearch-1.4.1
 ENV KIB_PKG_NAME kibana-4.0.0-beta3
+ENV LGS_PKG_NAME logstash-1.4.2
 
-#Install supervisor & nginx.
+#Install supervisor.
 RUN apt-get update && apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
 
@@ -30,22 +51,32 @@ RUN \
   rm -f $KIB_PKG_NAME.tar.gz && \
   mv /$KIB_PKG_NAME /kibana
 
+#Install Logstash.
+RUN \
+  cd / && \
+  wget https://download.elasticsearch.org/logstash/logstash/$LGS_PKG_NAME.tar.gz && \
+  tar xvzf $LGS_PKG_NAME.tar.gz && \
+  rm -f $LGS_PKG_NAME.tar.gz && \
+  mv /$LGS_PKG_NAME /logstash
+
 # Define mountable directories.
-VOLUME ["/data"]
+VOLUME ["/workspace"]
 
 # Mount config
-ADD config/elasticsearch.yml /elasticsearch/config/elasticsearch.yml
+COPY config/elasticsearch.yml /elasticsearch/config/elasticsearch.yml
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY config/kibana.yml /kibana/config/kibana.yml
+COPY config/kibana.yml /workspace/kibana.yml
+COPY config/logstash.conf /workspace/logstash.conf
 
 # Define working directory.
-WORKDIR /data
+WORKDIR /workspace
 
-#Install marvel
+#Install elasticsearch Head and Marvel plugins.
 RUN /elasticsearch/bin/plugin -i elasticsearch/marvel/latest
+RUN /elasticsearch/bin/plugin -install mobz/elasticsearch-head
 
 # Define default command.
 CMD ["/usr/bin/supervisord"]
 
-# Expose ports - 9200: HTTP,- 9300: transport, - 5601: HTTP.
-EXPOSE 9200 9300 5601
+# Expose ports.
+EXPOSE 9200 9300 5601 5000
