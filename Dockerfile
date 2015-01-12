@@ -79,4 +79,4 @@ RUN /elasticsearch/bin/plugin -install mobz/elasticsearch-head
 CMD ["/usr/bin/supervisord"]
 
 # Expose ports.
-EXPOSE 9200 9300 5601 5000
+EXPOSE 9200 9300 5601 5000/udp
