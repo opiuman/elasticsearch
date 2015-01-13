@@ -1,6 +1,5 @@
 #
-# Supervisoring Elasticsearch, Marvel and Kibana
-#
+# Supervisoring Elasticsearch, Logstash and Kibana
 #
 
 # Pull base image.
@@ -13,7 +12,7 @@ ENV ES_PKG_NAME elasticsearch-1.4.1
 ENV KIB_PKG_NAME kibana-4.0.0-beta3
 ENV LGS_PKG_NAME logstash-1.4.2
 
-# Install Utilities
+# Install Utilities.
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
@@ -23,7 +22,7 @@ RUN \
   apt-get install -y byobu curl git htop man unzip vim wget && \
   rm -rf /var/lib/apt/lists/*
 
-#Install Oracle Java
+#Install Oracle Java.
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
@@ -63,7 +62,7 @@ RUN \
 # Define mountable directories.
 VOLUME ["/workspace"]
 
-# Mount config
+# Mount config.
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY config/elasticsearch.yml /workspace/elasticsearch.yml
 COPY config/kibana.yml /workspace/kibana.yml
