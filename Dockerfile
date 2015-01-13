@@ -7,6 +7,12 @@
 FROM ubuntu:14.04
 MAINTAINER wangwscn@hotmail.com
 
+#Set ELK package envs.
+ENV DEBIAN_FRONTEND noninteractive
+ENV ES_PKG_NAME elasticsearch-1.4.1
+ENV KIB_PKG_NAME kibana-4.0.0-beta3
+ENV LGS_PKG_NAME logstash-1.4.2
+
 # Install Utilities
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
@@ -25,11 +31,6 @@ RUN \
   apt-get install -y oracle-java8-installer && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
-
-#Set ELK package envs.
-ENV ES_PKG_NAME elasticsearch-1.4.1
-ENV KIB_PKG_NAME kibana-4.0.0-beta3
-ENV LGS_PKG_NAME logstash-1.4.2
 
 #Install supervisor.
 RUN apt-get update && apt-get install -y supervisor
@@ -63,8 +64,8 @@ RUN \
 VOLUME ["/workspace"]
 
 # Mount config
-COPY config/elasticsearch.yml /elasticsearch/config/elasticsearch.yml
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY config/elasticsearch.yml /workspace/elasticsearch.yml
 COPY config/kibana.yml /workspace/kibana.yml
 COPY config/logstash.conf /workspace/logstash.conf
 

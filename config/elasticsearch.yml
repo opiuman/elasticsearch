@@ -29,7 +29,7 @@
 # Cluster name identifies your cluster for auto-discovery. If you're running
 # multiple clusters on the same network, make sure you're using unique names.
 #
-#cluster.name: opiuman_elasticsearch
+cluster.name: elk_elasticsearch
 
 
 #################################### Node #####################################
@@ -37,7 +37,7 @@
 # Node names are generated dynamically on startup, so you're relieved
 # from configuring them manually. You can tie this node to a specific name:
 #
-#node.name: "opiuman"
+node.name: "elk"
 
 # Every node can be configured to allow or deny being eligible as the master,
 # and to allow or deny to store the data.
@@ -146,7 +146,7 @@
 
 # Path to directory where to store index data allocated for this node.
 #
-#path.data: /path/to/data
+path.data: /workspace/data
 #
 # Can optionally include more than one location, causing data to be striped across
 # the locations (a la RAID 0) on a file level, favouring locations with most free
@@ -160,7 +160,7 @@
 
 # Path to log files:
 #
-#path.logs: /path/to/logs
+path.logs: /workspace/logs
 
 # Path to where plugins are installed:
 #
@@ -382,5 +382,7 @@
 # http server. With this enabled, it may pose a security risk, so disabling
 # it unless you need it is recommended (it is disabled by default).
 #
-#http.jsonp.enable: true
-
+http.jsonp.enable: true
+http.cors.enabled:      true
+http.cors.allow-origin: /http:\/\/www.elasticsearch.(org|com)/
+marvel.agent.enabled: false
