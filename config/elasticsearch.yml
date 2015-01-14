@@ -37,7 +37,7 @@ cluster.name: elk_elasticsearch
 # Node names are generated dynamically on startup, so you're relieved
 # from configuring them manually. You can tie this node to a specific name:
 #
-node.name: "elk"
+#node.name: "elk"
 
 # Every node can be configured to allow or deny being eligible as the master,
 # and to allow or deny to store the data.
@@ -385,4 +385,4 @@ path.logs: /workspace/logs
 http.jsonp.enable: true
 http.cors.enabled:      true
 http.cors.allow-origin: /http:\/\/www.elasticsearch.(org|com)/
-marvel.agent.enabled: false
+#marvel.agent.enabled: false

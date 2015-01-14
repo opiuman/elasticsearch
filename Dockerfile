@@ -4,7 +4,7 @@
 
 # Pull base image.
 FROM ubuntu:14.04
-MAINTAINER wangwscn@hotmail.com
+MAINTAINER WEISONG WANG <wangwscn@hotmail.com>
 
 #Set ELK package envs.
 ENV DEBIAN_FRONTEND noninteractive
@@ -63,7 +63,7 @@ RUN \
 VOLUME ["/workspace"]
 
 # Mount config.
-COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY config/supervisord.conf /workspace/supervisord.conf
 COPY config/elasticsearch.yml /workspace/elasticsearch.yml
 COPY config/kibana.yml /workspace/kibana.yml
 COPY config/logstash.conf /workspace/logstash.conf
