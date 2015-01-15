@@ -6,7 +6,7 @@
 FROM ubuntu:14.04
 MAINTAINER WEISONG WANG <wangwscn@hotmail.com>
 
-#Set ELK package envs.
+#Set package envs.
 ENV DEBIAN_FRONTEND noninteractive
 ENV ES_PKG_NAME elasticsearch-1.4.1
 ENV KIB_PKG_NAME kibana-4.0.0-beta3
