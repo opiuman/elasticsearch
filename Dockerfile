@@ -63,10 +63,10 @@ RUN \
 VOLUME ["/workspace"]
 
 # Mount config.
-COPY config/supervisord.conf /workspace/supervisord.conf
-COPY config/elasticsearch.yml /workspace/elasticsearch.yml
-COPY config/kibana.yml /workspace/kibana.yml
-COPY config/logstash.conf /workspace/logstash.conf
+COPY workspace/supervisord.conf /workspace/supervisord.conf
+COPY workspace/elasticsearch.yml /workspace/elasticsearch.yml
+COPY workspace/kibana.yml /workspace/kibana.yml
+COPY workspace/logstash.conf /workspace/logstash.conf
 
 # Define working directory.
 WORKDIR /workspace
@@ -79,4 +79,4 @@ RUN /elasticsearch/bin/plugin -install mobz/elasticsearch-head
 CMD ["/usr/bin/supervisord"]
 
 # Expose ports.
-EXPOSE 9200 9300 5601 5000/udp
+EXPOSE 9200 9300 5601 5000/udp 6666
