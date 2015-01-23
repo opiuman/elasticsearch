@@ -74,6 +74,8 @@ WORKDIR /workspace
 #Install elasticsearch Head and Marvel plugins.
 RUN /elasticsearch/bin/plugin -i elasticsearch/marvel/latest
 RUN /elasticsearch/bin/plugin -install mobz/elasticsearch-head
+RUN /elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
+RUN /elasticsearch/bin/plugin -install lmenezes/elasticsearch-kopf
 
 # Define default command.
 CMD ["/usr/bin/supervisord"]
