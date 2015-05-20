@@ -8,9 +8,9 @@ MAINTAINER WEISONG WANG <wangwscn@hotmail.com>
 
 #Set package envs.
 ENV DEBIAN_FRONTEND noninteractive
-ENV ES_PKG_NAME elasticsearch-1.4.1
-ENV KIB_PKG_NAME kibana-4.0.0-beta3
-ENV LGS_PKG_NAME logstash-1.4.2
+ENV ES_PKG_NAME elasticsearch-1.5.2
+ENV KIB_PKG_NAME kibana-4.0.2-linux-x64
+ENV LGS_PKG_NAME logstash-1.5.0
 
 # Install Utilities.
 RUN \
@@ -19,7 +19,8 @@ RUN \
   apt-get -y upgrade && \
   apt-get install -y build-essential && \
   apt-get install -y software-properties-common && \
-  apt-get install -y byobu curl git htop man unzip vim wget && \
+  apt-get install -y byobu curl git htop man unzip vim wget npm && \
+  apt-get install -y nodejs && \
   rm -rf /var/lib/apt/lists/*
 
 #Install Oracle Java.
@@ -38,7 +39,7 @@ RUN mkdir -p /var/log/supervisor
 # Install ElasticSearch.
 RUN \
   cd / && \
-  wget https://download.elasticsearch.org/elasticsearch/elasticsearch/$ES_PKG_NAME.tar.gz && \
+  wget https://download.elastic.co/elasticsearch/elasticsearch/$ES_PKG_NAME.tar.gz && \
   tar xvzf $ES_PKG_NAME.tar.gz && \
   rm -f $ES_PKG_NAME.tar.gz && \
   mv /$ES_PKG_NAME /elasticsearch
@@ -46,7 +47,7 @@ RUN \
 #Install Kibana.
 RUN \
   cd / && \
-  wget https://download.elasticsearch.org/kibana/kibana/$KIB_PKG_NAME.tar.gz && \
+  wget https://download.elastic.co/kibana/kibana/$KIB_PKG_NAME.tar.gz && \
   tar xvzf $KIB_PKG_NAME.tar.gz && \
   rm -f $KIB_PKG_NAME.tar.gz && \
   mv /$KIB_PKG_NAME /kibana
@@ -54,7 +55,7 @@ RUN \
 #Install Logstash.
 RUN \
   cd / && \
-  wget https://download.elasticsearch.org/logstash/logstash/$LGS_PKG_NAME.tar.gz && \
+  wget http://download.elastic.co/logstash/logstash/$LGS_PKG_NAME.tar.gz && \
   tar xvzf $LGS_PKG_NAME.tar.gz && \
   rm -f $LGS_PKG_NAME.tar.gz && \
   mv /$LGS_PKG_NAME /logstash
