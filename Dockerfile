@@ -77,6 +77,8 @@ RUN /elasticsearch/bin/plugin -i elasticsearch/marvel/latest
 RUN /elasticsearch/bin/plugin -install mobz/elasticsearch-head
 RUN /elasticsearch/bin/plugin -install lukas-vlcek/bigdesk
 RUN /elasticsearch/bin/plugin -install lmenezes/elasticsearch-kopf
+RUN /elasticsearch/bin/plugin -install elasticsearch/license/latest
+RUN /elasticsearch/bin/plugin -install elasticsearch/watcher/latest
 
 # Define default command.
 CMD ["/usr/bin/supervisord"]
