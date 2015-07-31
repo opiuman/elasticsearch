@@ -20,3 +20,4 @@ This will start an elk container with the [default configs](https://github.com/o
     http://<host>:9200/_plugin/bigdesk        -- bigdesk
     http://<host>:9200/_plugin/kopf           -- kopf
     
+Watcher
